@@ -1,0 +1,65 @@
+<nav class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
+  <div class="logo-container">
+    <button class="icon-button" (click)="toggleCollapse()">
+      <i class="fal fa-bars" [ngClass]="'icone-bars'"></i>
+    </button>
+    <p class="logo-text" *ngIf="collapsed">Menu</p>
+  </div>
+  <!-- <ul class="sidenav-nav">
+    <li class="sidenav-nav-item" *ngFor="let data of navData">
+      <a
+        class="sidenav-nav-link"
+        [routerLink]="[data.routeLink]"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="sidenav-link-icon" [class]="data.icon"></i>
+        <span class="sidenav-link-text" *ngIf="collapsed">{{
+          data.label
+        }}</span>
+      </a>
+      
+    </li>
+  </ul> -->
+
+  <ul class="sidenav-nav">
+    <li class="sidenav-nav-item" *ngFor="let data of navData">
+      <a
+        class="sidenav-nav-link"
+        *ngIf="data.items && data.items.length > 0"
+        (click)="handleClick(data)"
+      >
+        <i class="sidenav-link-icon" [class]="data.icon"></i>
+        <span class="sidenav-link-text" *ngIf="collapsed">{{
+          data.label
+        }}</span>
+        <i
+          *ngIf="data.items && collapsed"
+          class="menu-collapse-icon"
+          [ngClass]="
+            !data.expanded ? 'fal fa-angle-right' : 'fal fa-angle-down'
+          "
+        ></i>
+      </a>
+
+      <a
+        class="sidenav-nav-link"
+        *ngIf="!data.items || (data.items && data.items.length === 0)"
+        [routerLink]="[data.routeLink]"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="sidenav-link-icon" [class]="data.icon"></i>
+        <span class="sidenav-link-text" *ngIf="collapsed">{{
+          data.label
+        }}</span>
+      </a>
+      <app-sublevel-menu
+        [data]="data"
+        [collapsed]="collapsed"
+        [multiple]="multiple"
+        [expanded]="data.expanded"
+      ></app-sublevel-menu>
+    </li>
+  </ul>
+</nav>

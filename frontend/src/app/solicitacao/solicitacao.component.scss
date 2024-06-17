@@ -1,0 +1,61 @@
+main {
+  padding: 0.5rem;
+}
+
+.main-content {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.card-solicitacao {
+  padding: 8px;
+  width: 100%;
+  gap: 6px;
+  background: #f4f7fa;
+  height: 170px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: 0 0.25rem 0.5rem #cbcbcb;
+  border: solid 0.1px #cbcbcb;
+}
+
+.extension-card-for-button {
+  height: 40px;
+  width: 100%;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+
+  background: linear-gradient(90deg, #d29a78 2.75%, #d28e5b 100%);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .main-content {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+  .main-content {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .main-content {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}

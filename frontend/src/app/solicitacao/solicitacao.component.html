@@ -1,0 +1,21 @@
+<app-header [title]="'Lista de Solicitações'"></app-header>
+<main>
+  <div class="main-content">
+    <div *ngFor="let solicitacao of solicitacoes">
+      <div class="card-solicitacao">
+        <p class="nome-solicitante">
+          <b>Nome: </b>{{ solicitacao.nomeSolicitante }}
+        </p>
+        <p class="descricao-produto">
+          <b>Descrição: </b>
+          <br />
+          {{ solicitacao.descricaoItem }}
+        </p>
+        <p class="preco-produto">
+          <b>Preço: </b>{{ solicitacao.precoProduto }}
+        </p>
+      </div>
+      <button class="extension-card-for-button">Visualizar</button>
+    </div>
+  </div>
+</main>
