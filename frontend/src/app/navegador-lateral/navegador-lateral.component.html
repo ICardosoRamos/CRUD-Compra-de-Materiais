@@ -27,7 +27,13 @@
       <a
         class="sidenav-nav-link"
         *ngIf="data.items && data.items.length > 0"
-        (click)="handleClick(data)"
+        (click)="
+          !collapsed
+            ? !data.expanded
+              ? openSidenav()
+              : openSidenav()
+            : handleClick(data)
+        "
       >
         <i class="sidenav-link-icon" [class]="data.icon"></i>
         <span class="sidenav-link-text" *ngIf="collapsed">{{

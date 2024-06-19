@@ -1,0 +1,40 @@
+<div class="filtrar">
+  <h6>Filtros</h6>
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Nome Solicitante</mat-label>
+      <input
+        matInput
+        placeholder="Ex. João Silva"
+        [value]="filtros.nomeSolicitante"
+        (change)="handleChangeFiltros($event, 'nomeSolicitante')"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Descrição Produto</mat-label>
+      <input
+        matInput
+        placeholder="Ex. Clips de papel"
+        [value]="filtros.descricaoItem"
+        (change)="handleChangeFiltros($event, 'descricaoItem')"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Preço</mat-label>
+      <input
+        matInput
+        placeholder="Ex. 6000"
+        [value]="filtros.precoProduto"
+        (change)="handleChangeFiltros($event, 'precoProduto')"
+      />
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button (click)="filtrar()">Filtrar</button>
+  </mat-dialog-actions>
+
+  <mat-dialog-actions>
+    <button mat-button (click)="limparFiltros()">Limpar Filtros</button>
+  </mat-dialog-actions>
+</div>

@@ -1,5 +1,6 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   HostListener,
   OnInit,
@@ -59,6 +60,16 @@ export class NavegadorLateralComponent implements OnInit {
   }
 
   openSidenav(): void {
+    const hamburgerButton = document.querySelector('.icon-button');
+    if (hamburgerButton) {
+      if (!this.collapsed) {
+        // Adiciona a classe para mostrar a navbar e rotaciona o ícone
+        hamburgerButton.classList.add('open');
+      } else {
+        // Remove a classe para ocultar a navbar e rotaciona o ícone de volta
+        hamburgerButton.classList.remove('open');
+      }
+    }
     this.collapsed = true;
     this.onToggleSideNav.emit({
       collapsed: this.collapsed,

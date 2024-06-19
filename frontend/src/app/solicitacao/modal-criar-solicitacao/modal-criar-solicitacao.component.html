@@ -1,0 +1,36 @@
+<div class="criar_nova">
+  <h6>Criar Solicitação</h6>
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Nome Solicitante</mat-label>
+      <input
+        matInput
+        placeholder="Ex. João Silva"
+        [value]="data.nomeSolicitante"
+        (change)="handleChangeFiltros($event, 'nomeSolicitante')"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Descrição Produto</mat-label>
+      <input
+        matInput
+        placeholder="Ex. Clips de papel"
+        [value]="data.descricaoItem"
+        (change)="handleChangeFiltros($event, 'descricaoItem')"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Preço</mat-label>
+      <input
+        matInput
+        placeholder="Ex. 6000"
+        [value]="data.precoProduto"
+        (change)="handleChangeFiltros($event, 'precoProduto')"
+      />
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button (click)="criar()">Criar</button>
+  </mat-dialog-actions>
+</div>

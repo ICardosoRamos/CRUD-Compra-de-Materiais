@@ -4,9 +4,14 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgb(27, 189, 157);
-  border-radius: 100px;
-  font-size: 18px;
-  font-weight: bold;
+  background: linear-gradient(to right, #00a886 0%, #006850 100%);
+  font-size: 20px;
   color: #fff;
+
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-family: "jaf-domus", sans-serif;
 }

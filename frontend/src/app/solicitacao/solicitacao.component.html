@@ -1,5 +1,16 @@
 <app-header [title]="'Lista de Solicitações'"></app-header>
 <main>
+  <div class="acoes">
+    <button mat-button (click)="abrirModalCriarNova()">
+      <i class="fal fa-plus"></i>
+      Criar Nova
+    </button>
+
+    <button mat-button (click)="abrirModalFiltros()">
+      <i class="fal fa-filter"></i>
+      Filtrar
+    </button>
+  </div>
   <div class="main-content">
     <div *ngFor="let solicitacao of solicitacoes">
       <div class="card-solicitacao">
@@ -15,7 +26,13 @@
           <b>Preço: </b>{{ solicitacao.precoProduto }}
         </p>
       </div>
-      <button class="extension-card-for-button">Visualizar</button>
+      <button
+        class="extension-card-for-button"
+        mat-raised-button
+        color="primary"
+      >
+        Ver Detalhes
+      </button>
     </div>
   </div>
 </main>

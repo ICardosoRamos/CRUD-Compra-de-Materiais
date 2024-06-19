@@ -1,19 +1,26 @@
 .sidenav {
-  background: linear-gradient(to right, #008567 0%, #33d6b5 100%);
+  background: linear-gradient(to right, #007056 0%, #00c09a 100%);
   transition: all 0.5s ease;
   position: fixed;
   z-index: 1;
   top: 0;
-  width: 4rem;
+  width: 3rem;
   height: 100vh;
-  box-shadow: 0.013rem 0 0.45rem 0 #8690a3;
+
+  @media screen and (min-width: 769px) {
+    width: 4rem;
+  }
 
   .logo-container {
     display: flex;
     align-items: center;
-    padding: 0.608rem 0.608rem 0 0.608rem;
+    padding: 0.608rem 0 0 0;
     width: 100%;
     transition: all 1.5s ease;
+
+    @media screen and (min-width: 769px) {
+      padding: 0.608rem 0.608rem 0 0.608rem;
+    }
 
     .icon-button {
       background: transparent;
@@ -39,12 +46,21 @@
       display: flex;
       justify-content: center;
       align-items: center;
+
+      font-weight: 300;
+      line-height: 100%;
+      letter-spacing: 0.03em;
+      font-family: "jaf-domus", sans-serif;
     }
   }
 }
 
 .sidenav-collapsed {
-  width: 16.5625rem;
+  width: 12.5625rem;
+
+  @media screen and (min-width: 769px) {
+    width: 16.5625rem;
+  }
 }
 
 .icon-button.open {
@@ -53,12 +69,16 @@
 
 .sidenav-nav {
   list-style: none;
-  padding: 0.608rem;
+  padding: 0.608rem 0 0 0;
   margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   height: calc(100% - 3.65rem);
+
+  @media screen and (min-width: 769px) {
+    padding: 0.608rem;
+  }
 
   .sidenav-nav-item {
     width: 100%;
@@ -84,22 +104,23 @@
 
       .sidenav-link-text {
         margin-left: 1.5rem;
+
+        font-weight: 300;
+        line-height: 100%;
+        letter-spacing: 0.03em;
+        font-family: "jaf-domus", sans-serif;
       }
     }
 
     .sidenav-nav-link:hover {
-      background-color: #fff;
+      background: #aad0ff;
       color: #000;
-
-      .menu-collapse-icon {
-        color: #000;
-      }
     }
   }
 }
 
 .active {
-  background-color: #fff;
+  background: #cfe5ff;
 
   .menu-collapse-icon,
   .sidenav-link-icon,
@@ -108,9 +129,12 @@
   }
 }
 
+// ESSE CSS ERA PARA TER UM SUBMENU DE ITEMS NOS ITEMS DA NAV BAR
+
 .active-sublevel {
+  background: #cfe5ff;
   .sublevel-link-text {
-    color: #fff;
+    color: #000;
   }
 }
 
@@ -132,7 +156,7 @@
       display: flex;
       align-items: center;
       height: 3rem;
-      color: #898989;
+      color: #f3f3f3;
       text-decoration: none;
       border-radius: 0.625rem;
 
@@ -150,7 +174,8 @@
     }
 
     .sublevel-nav-link:hover {
-      color: #f3f3f3;
+      color: #000 !important;
+      background: #aad0ff;
     }
   }
 }

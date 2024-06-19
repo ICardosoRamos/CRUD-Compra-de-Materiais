@@ -1,0 +1,11 @@
+main {
+  padding: 0.5rem;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (min-width: 769px) {
+    height: 86vh;
+  }
+}
