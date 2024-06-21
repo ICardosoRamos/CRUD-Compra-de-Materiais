@@ -49,7 +49,22 @@ export class ModalFiltrarSolicitacaoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.filtros = this.data;
+    let valorFinal = '';
+
+    if (this.data.preco) {
+      const preco = String(this.data.preco);
+
+      const value = preco.replace(/[^0-9.,]/g, '');
+      const normalizedValue = value.replace(',', '.');
+      const valueInFloat = parseFloat(normalizedValue);
+
+      valorFinal = valueInFloat.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      });
+    }
+
+    this.filtros = { ...this.data, preco: String(valorFinal) || '' };
   }
 
   formatarPreco(event: Event): void {

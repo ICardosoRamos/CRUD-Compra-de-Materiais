@@ -67,8 +67,6 @@ export class SolicitacaoComponent implements OnInit {
       filtros.preco = parseFloat(valorDesformatado);
     }
 
-    console.log(filtros);
-
     if (filtros.aprovado === 'Tudo') {
       filtros.aprovado = '';
     }
@@ -106,9 +104,20 @@ export class SolicitacaoComponent implements OnInit {
         });
       }
 
+      this.filtrosRetornados = { ...result };
+
       if (result) {
         return this.handleGetSolicitacoes({
           ...result,
+        });
+      }
+
+      if (!result) {
+        return this.handleGetSolicitacoes({
+          nome_solicitante: '',
+          descricao_produto: '',
+          preco: '',
+          aprovado: '',
         });
       }
     });
@@ -161,7 +170,6 @@ export class SolicitacaoComponent implements OnInit {
   }
 
   abrirModalAprovacao(data: any): void {
-    console.log(data);
     const dialogRef = this.dialog.open(ModalAprovarSolicitacaoComponent, {
       width: '250px',
       height: '390px',

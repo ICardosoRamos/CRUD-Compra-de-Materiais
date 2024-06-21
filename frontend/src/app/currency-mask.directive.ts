@@ -34,12 +34,10 @@ export class CurrencyMaskDirective {
       (event.key === ',' && !this.el.value.includes(',')) ||
       event.key === 'Dead'
     ) {
-      console.log(2);
       return;
     }
 
     if (event.key.match(/[^0-9]/)) {
-      console.log(1);
       event.preventDefault();
     }
   }

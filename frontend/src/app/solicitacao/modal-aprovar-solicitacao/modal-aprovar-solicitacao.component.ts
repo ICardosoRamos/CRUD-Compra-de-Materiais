@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -24,7 +24,7 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './modal-aprovar-solicitacao.component.html',
   styleUrl: './modal-aprovar-solicitacao.component.scss',
 })
-export class ModalAprovarSolicitacaoComponent {
+export class ModalAprovarSolicitacaoComponent implements OnInit {
   dataReceived: any = {
     id: null,
     nome_solicitante: '',

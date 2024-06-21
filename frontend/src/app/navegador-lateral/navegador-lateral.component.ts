@@ -45,10 +45,8 @@ export class NavegadorLateralComponent implements OnInit {
     const hamburgerButton = document.querySelector('.icon-button');
     if (hamburgerButton) {
       if (!this.collapsed) {
-        // Adiciona a classe para mostrar a navbar e rotaciona o ícone
         hamburgerButton.classList.add('open');
       } else {
-        // Remove a classe para ocultar a navbar e rotaciona o ícone de volta
         hamburgerButton.classList.remove('open');
       }
     }
@@ -63,10 +61,8 @@ export class NavegadorLateralComponent implements OnInit {
     const hamburgerButton = document.querySelector('.icon-button');
     if (hamburgerButton) {
       if (!this.collapsed) {
-        // Adiciona a classe para mostrar a navbar e rotaciona o ícone
         hamburgerButton.classList.add('open');
       } else {
-        // Remove a classe para ocultar a navbar e rotaciona o ícone de volta
         hamburgerButton.classList.remove('open');
       }
     }
@@ -86,13 +82,9 @@ export class NavegadorLateralComponent implements OnInit {
   }
 
   handleClick(item: TNavbarData): void {
-    console.log(item);
-    console.log(!this.multiple);
     if (!this.multiple) {
       for (let modelItem of this.navData) {
-        console.log('entrou no for');
         if (item !== modelItem && modelItem.expanded) {
-          console.log('entrou no if mais longo');
           modelItem.expanded = false;
         }
       }

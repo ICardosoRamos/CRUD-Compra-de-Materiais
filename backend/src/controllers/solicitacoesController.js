@@ -11,11 +11,6 @@ const getAllsolicitacoes = (req, res) => {
     const connection = new Connection(env);
     let sql = "SELECT * FROM Solicitacoes";
 
-    console.log("=====================");
-    console.log(typeof req.query.preco);
-    console.log(req.query.preco);
-    console.log("=====================");
-
     if (
       req.query.nome_solicitante ||
       req.query.descricao_produto ||
@@ -109,11 +104,6 @@ const createSolicitacao = (req, res) => {
   try {
     const connection = new Connection(env);
     const object = {};
-
-    console.log("============");
-    console.log(typeof req.body.preco);
-    console.log(req.body.preco);
-    console.log("===========");
 
     if (
       !req.body.nome_solicitante ||

@@ -102,7 +102,6 @@ export class SublevelMenuComponent {
   ngOnInit(): void {}
 
   handleClick(item: any): void {
-    console.log('sublevel');
     if (!this.multiple) {
       if (this.data.items && this.data.items.length > 0) {
         for (let modelItem of this.data.items) {
