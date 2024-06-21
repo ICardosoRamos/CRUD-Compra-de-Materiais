@@ -91,4 +91,4 @@ Mencione todos aqueles que ajudaram a levantar o projeto desde o seu início
 * **Irwyng Cardoso Ramos** - *Trabalho Total* - [ICardosoRamos](https://github.com/ICardosoRamos)
 
 ---
-⌨️ com ❤️ por [Irwyng Cardoso Ramos](https://github.com/ICardosoRamos) 😊
+⌨️ com ❤️ por [Irwyng Cardoso Ramos](https://github.com/ICardosoRamos) Será ótimo aprender mais com vocês se o retorno for positivo. Vlw😊
