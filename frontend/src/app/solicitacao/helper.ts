@@ -1,5 +1,6 @@
 export interface TData {
-  nomeSolicitante: string;
-  descricaoItem: string;
-  precoProduto: string;
+  nome_solicitante: string;
+  descricao_produto: string;
+  preco: string;
+  aprovado: string;
 }

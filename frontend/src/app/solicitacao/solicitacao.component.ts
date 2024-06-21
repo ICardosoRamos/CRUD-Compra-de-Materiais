@@ -11,12 +11,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalFiltrarSolicitacaoComponent } from './modal-filtrar-solicitacao/modal-filtrar-solicitacao.component';
 import { ModalCriarNovaSolicitacaoComponent } from './modal-criar-solicitacao/modal-criar-solicitacao.component';
 import { TData } from './helper';
+import { HttpClient } from '@angular/common/http';
+import { ModalAprovarSolicitacaoComponent } from './modal-aprovar-solicitacao/modal-aprovar-solicitacao.component';
 
 type TSolicitacoes = {
   id: number;
-  nomeSolicitante: string;
-  descricaoItem: string;
-  precoProduto: string;
+  nome_solicitante: string;
+  descricao_produto: string;
+  preco: string;
 };
 
 @Component({
@@ -37,45 +39,77 @@ type TSolicitacoes = {
 export class SolicitacaoComponent implements OnInit {
   solicitacoes: TSolicitacoes[] = [];
   filtrosRetornados: TData = {
-    nomeSolicitante: '',
-    descricaoItem: '',
-    precoProduto: '',
+    nome_solicitante: '',
+    descricao_produto: '',
+    preco: '',
+    aprovado: '',
   };
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private http: HttpClient) {}
 
   ngOnInit(): void {
-    // AQUI EU VOU FAZER A REQ PARA BUSCAR AS SOLICITACOES CRIADAS
-    for (let index = 0; index < 14; index++) {
-      this.solicitacoes.push({
-        id: index + 1,
-        nomeSolicitante: 'João Silva',
-        descricaoItem: 'Laptop Dell',
-        precoProduto: '$1200',
-      });
+    this.handleGetSolicitacoes(this.filtrosRetornados);
+  }
+
+  handleGetSolicitacoes(filtros: any): void {
+    this.filtrosRetornados = filtros;
+
+    if (
+      filtros.preco === 'R$ 0,00' ||
+      filtros.preco === 0 ||
+      filtros.preco === '0' ||
+      filtros.preco === ''
+    ) {
+      filtros.preco = '';
+    } else {
+      let valorDesformatado = filtros.preco.replace(/[^\d,]/g, '');
+      valorDesformatado = valorDesformatado.replace(',', '.');
+      filtros.preco = parseFloat(valorDesformatado);
     }
+
+    console.log(filtros);
+
+    if (filtros.aprovado === 'Tudo') {
+      filtros.aprovado = '';
+    }
+
+    this.http
+      .get<TSolicitacoes[]>('http://localhost:9800/api/solicitacoes', {
+        params: { ...filtros },
+      })
+      .subscribe((solicitacoes) => {
+        this.solicitacoes = solicitacoes;
+      });
   }
 
   abrirModalFiltros(): void {
     const dialogRef = this.dialog.open(ModalFiltrarSolicitacaoComponent, {
       width: '250px',
-      height: '450px',
+      height: '460px',
       data: this.filtrosRetornados,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
-      if (result) {
-        this.filtrosRetornados = result;
-        // Execute your filtering logic here
-      }
-      if (!result) {
+      if (result === 'limpar') {
         this.filtrosRetornados = {
-          nomeSolicitante: '',
-          descricaoItem: '',
-          precoProduto: '',
+          nome_solicitante: '',
+          descricao_produto: '',
+          preco: '',
+          aprovado: '',
         };
+
+        return this.handleGetSolicitacoes({
+          nome_solicitante: '',
+          descricao_produto: '',
+          preco: '',
+          aprovado: '',
+        });
+      }
+
+      if (result) {
+        return this.handleGetSolicitacoes({
+          ...result,
+        });
       }
     });
   }
@@ -87,11 +121,62 @@ export class SolicitacaoComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
+      if (!result) return;
+
+      if (result.nome_solicitante && result.descricao_produto && result.preco) {
+        if (
+          result.preco === 'R$ 0,00' ||
+          result.preco === 0 ||
+          result.preco === '0' ||
+          result.preco === ''
+        ) {
+          result.preco = '';
+        } else {
+          let valorDesformatado = result.preco.replace(/[^\d,]/g, '');
+          valorDesformatado = valorDesformatado.replace(',', '.');
+          result.preco = parseFloat(valorDesformatado);
+        }
+
+        this.http
+          .post('http://localhost:9800/api/solicitacoes', result)
+          .subscribe((result) => {
+            return this.http
+              .get<TSolicitacoes[]>('http://localhost:9800/api/solicitacoes', {
+                params: {
+                  ...{
+                    nome_solicitante: '',
+                    descricao_produto: '',
+                    preco: '',
+                    aprovado: '',
+                  },
+                },
+              })
+              .subscribe((solicitacoes) => {
+                this.solicitacoes = solicitacoes;
+              });
+          });
+      }
+      return;
+    });
+  }
+
+  abrirModalAprovacao(data: any): void {
+    console.log(data);
+    const dialogRef = this.dialog.open(ModalAprovarSolicitacaoComponent, {
+      width: '250px',
+      height: '390px',
+      data: data,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log(result);
-        // Execute your filtering logic here
+        this.http
+          .put(`http://localhost:9800/api/solicitacoes/${result.id}`, {
+            aprovado: result.aprovado,
+          })
+          .subscribe((result) => {
+            console.log(result);
+          });
       }
     });
   }

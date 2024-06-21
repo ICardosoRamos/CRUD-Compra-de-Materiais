@@ -15,23 +15,24 @@
     <div *ngFor="let solicitacao of solicitacoes">
       <div class="card-solicitacao">
         <p class="nome-solicitante">
-          <b>Nome: </b>{{ solicitacao.nomeSolicitante }}
+          <b>Nome: </b>{{ solicitacao.nome_solicitante }}
         </p>
         <p class="descricao-produto">
           <b>Descrição: </b>
           <br />
-          {{ solicitacao.descricaoItem }}
+          {{ solicitacao.descricao_produto }}
         </p>
         <p class="preco-produto">
-          <b>Preço: </b>{{ solicitacao.precoProduto }}
+          <b>Preço: </b>{{ solicitacao.preco | currency : "BRL" }}
         </p>
       </div>
       <button
         class="extension-card-for-button"
         mat-raised-button
         color="primary"
+        (click)="abrirModalAprovacao(solicitacao)"
       >
-        Ver Detalhes
+        Aprovar/Reprovar
       </button>
     </div>
   </div>

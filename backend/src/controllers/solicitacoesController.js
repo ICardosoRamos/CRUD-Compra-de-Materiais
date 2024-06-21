@@ -10,12 +10,17 @@ const getAllsolicitacoes = (req, res) => {
     const result = [];
     const connection = new Connection(env);
     let sql = "SELECT * FROM Solicitacoes";
-    console.log(req.query);
+
+    console.log("=====================");
+    console.log(typeof req.query.preco);
+    console.log(req.query.preco);
+    console.log("=====================");
 
     if (
       req.query.nome_solicitante ||
       req.query.descricao_produto ||
-      req.query.preco
+      (req.query.preco && req.query.preco !== "0") ||
+      req.query.aprovado
     )
       sql = sql + " WHERE ";
 
@@ -27,14 +32,25 @@ const getAllsolicitacoes = (req, res) => {
         sql = sql + " AND descricao_produto LIKE @descricao_produto";
       else sql = sql + "descricao_produto LIKE @descricao_produto";
 
-    if (req.query.preco)
+    if (req.query.preco && req.query.preco !== "0")
       if (req.query.nome_solicitante || req.query.descricao_produto)
         sql = sql + " AND preco LIKE @preco";
       else sql = sql + "preco LIKE @preco";
 
-    sql = sql + ";";
+    if (req.query.aprovado)
+      if (
+        req.query.nome_solicitante ||
+        req.query.descricao_produto ||
+        req.query.preco
+      ) {
+        if (req.query.aprovado === "Reprovadas") sql += " AND aprovado = 0";
+        else sql += " AND aprovado = 1";
+      } else {
+        if (req.query.aprovado === "Reprovadas") sql += "aprovado = 0";
+        else sql += "aprovado = 1";
+      }
 
-    console.log(sql);
+    sql = sql + ";";
 
     connection.on("connect", async function (err) {
       if (err) throw new Error(err);
@@ -94,6 +110,11 @@ const createSolicitacao = (req, res) => {
     const connection = new Connection(env);
     const object = {};
 
+    console.log("============");
+    console.log(typeof req.body.preco);
+    console.log(req.body.preco);
+    console.log("===========");
+
     if (
       !req.body.nome_solicitante ||
       !req.body.descricao_produto ||
@@ -123,7 +144,7 @@ const createSolicitacao = (req, res) => {
         TYPES.NVarChar,
         req.body.descricao_produto
       );
-      request.addParameter("preco", TYPES.Int, req.body.preco);
+      request.addParameter("preco", TYPES.Numeric, req.body.preco);
       request.addParameter("aprovado", TYPES.Bit, false);
 
       request.on("row", function (columns) {
@@ -150,11 +171,6 @@ const createSolicitacao = (req, res) => {
 };
 
 const aprovarSolicitacao = (req, res, next) => {
-  if (!req.body.aprovado)
-    return res
-      .status(400)
-      .send({ error: "É necessário selecionar uma opção!" });
-
   try {
     const id = req.params.id;
     const connection = new Connection(env);

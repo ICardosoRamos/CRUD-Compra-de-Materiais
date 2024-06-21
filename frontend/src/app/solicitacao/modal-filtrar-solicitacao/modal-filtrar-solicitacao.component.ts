@@ -14,29 +14,34 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TData } from '../helper';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { CurrencyMaskDirective } from '../../currency-mask.directive';
 
 @Component({
   selector: 'app-modal-filtrar-solicitacao',
   templateUrl: './modal-filtrar-solicitacao.component.html',
   standalone: true,
   imports: [
-    MatFormFieldModule,
     MatInputModule,
-    FormsModule,
     MatButtonModule,
-    MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
+    MatAutocompleteModule,
+    FormsModule,
+    CurrencyMaskDirective,
   ],
   styleUrl: './modal-filtrar-solicitacao.component.scss',
 })
 export class ModalFiltrarSolicitacaoComponent implements OnInit {
   filtros: TData = {
-    nomeSolicitante: '',
-    descricaoItem: '',
-    precoProduto: '',
+    nome_solicitante: '',
+    descricao_produto: '',
+    preco: '',
+    aprovado: '',
   };
+
+  options: string[] = ['Tudo', 'Aprovadas', 'Reprovadas'];
 
   constructor(
     public dialogRef: MatDialogRef<ModalFiltrarSolicitacaoComponent>,
@@ -47,13 +52,45 @@ export class ModalFiltrarSolicitacaoComponent implements OnInit {
     this.filtros = this.data;
   }
 
+  formatarPreco(event: Event): void {
+    const target = event.target as HTMLInputElement;
+
+    if (
+      target.value === 'R$ 0,0' ||
+      target.value === 'R$0,00' ||
+      target.value === '$ 0,00' ||
+      target.value === 'R$ ,00' ||
+      target.value === 'R$ 000' ||
+      target.value === 'R 0,00'
+    ) {
+      this.data.preco = 'R$ 0,00';
+      return;
+    }
+
+    const value = target.value.replace(/[^0-9]/g, '');
+
+    const valueInCents = parseInt(value, 10);
+    const valueInReais = valueInCents / 100;
+
+    const valor_final = valueInReais.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    });
+
+    this.filtros.preco = valor_final;
+  }
+
+  onOptionChange(value: string) {
+    this.filtros.aprovado = value;
+  }
+
   handleChangeFiltros(
     event: Event,
-    key: 'nomeSolicitante' | 'descricaoItem' | 'precoProduto'
+    key: 'nome_solicitante' | 'descricao_produto' | 'preco' | 'aprovado'
   ) {
-    console.log(1);
     const target = event.target as HTMLInputElement;
-    this.filtros[key] = target.value;
+
+    return (this.filtros[key] = target.value);
   }
 
   filtrar() {
@@ -61,6 +98,6 @@ export class ModalFiltrarSolicitacaoComponent implements OnInit {
   }
 
   limparFiltros() {
-    this.dialogRef.close(null);
+    this.dialogRef.close('limpar');
   }
 }

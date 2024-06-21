@@ -1,4 +1,4 @@
-.criar_nova {
+.aprovar {
   display: flex;
   flex-direction: column;
   padding: 1rem;
@@ -13,10 +13,16 @@
   }
 
   mat-dialog-actions {
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
     button {
       background: linear-gradient(to right, #008264 0%, #00cba3 100%);
       color: #fff;
       width: 100%;
+      margin-left: 0px;
     }
   }
 }

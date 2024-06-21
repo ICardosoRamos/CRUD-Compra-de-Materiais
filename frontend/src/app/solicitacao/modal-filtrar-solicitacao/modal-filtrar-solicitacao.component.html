@@ -6,8 +6,8 @@
       <input
         matInput
         placeholder="Ex. João Silva"
-        [value]="filtros.nomeSolicitante"
-        (change)="handleChangeFiltros($event, 'nomeSolicitante')"
+        [value]="filtros.nome_solicitante"
+        (change)="handleChangeFiltros($event, 'nome_solicitante')"
       />
     </mat-form-field>
     <mat-form-field>
@@ -15,26 +15,42 @@
       <input
         matInput
         placeholder="Ex. Clips de papel"
-        [value]="filtros.descricaoItem"
-        (change)="handleChangeFiltros($event, 'descricaoItem')"
+        [value]="filtros.descricao_produto"
+        (change)="handleChangeFiltros($event, 'descricao_produto')"
       />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Preço</mat-label>
       <input
         matInput
-        placeholder="Ex. 6000"
-        [value]="filtros.precoProduto"
-        (change)="handleChangeFiltros($event, 'precoProduto')"
+        placeholder="Digite só numeros. Ex. 6000"
+        [value]="filtros.preco"
+        (input)="formatarPreco($event)"
+        appCurrencyMask
       />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Aprovadas/Reprovadas</mat-label>
+      <input
+        type="text"
+        placeholder="Selecione uma"
+        aria-label="Number"
+        matInput
+        [matAutocomplete]="auto"
+        [(ngModel)]="filtros.aprovado"
+        (ngModelChange)="onOptionChange($event)"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        @for (option of options; track option) {
+        <mat-option [value]="option">{{ option }}</mat-option>
+        }
+      </mat-autocomplete>
     </mat-form-field>
   </mat-dialog-content>
 
   <mat-dialog-actions>
     <button mat-button (click)="filtrar()">Filtrar</button>
-  </mat-dialog-actions>
 
-  <mat-dialog-actions>
     <button mat-button (click)="limparFiltros()">Limpar Filtros</button>
   </mat-dialog-actions>
 </div>

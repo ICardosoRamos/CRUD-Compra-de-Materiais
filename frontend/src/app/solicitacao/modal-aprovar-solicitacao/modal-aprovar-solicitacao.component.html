@@ -1,0 +1,38 @@
+<div class="aprovar">
+  <h6>Criar Solicitação</h6>
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Nome Solicitante</mat-label>
+      <input
+        matInput
+        placeholder="Ex. João Silva"
+        [value]="dataReceived.nome_solicitante"
+        readonly
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Descrição Produto</mat-label>
+      <input
+        matInput
+        placeholder="Ex. Clips de papel"
+        [value]="dataReceived.descricao_produto"
+        readonly
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Preço</mat-label>
+      <input
+        matInput
+        placeholder="Ex. 6000"
+        [value]="formataValor(dataReceived.preco)"
+        readonly
+      />
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button (click)="aprovar()">Aprovar</button>
+
+    <button mat-button (click)="reprovar()">Reprovar</button>
+  </mat-dialog-actions>
+</div>
